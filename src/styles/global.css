@@ -1,9 +1,18 @@
 @import "tailwindcss";
 @import "@fontsource-variable/ibm-plex-sans";
+@import "@fontsource/ibm-plex-serif/400.css";
+@import "@fontsource/ibm-plex-serif/500.css";
+@import "@fontsource/ibm-plex-serif/600.css";
+@import "@fontsource/ibm-plex-serif/600-italic.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/ibm-plex-mono/600.css";
 
 @theme {
   /* Tipografía */
   --font-sans: "IBM Plex Sans Variable", system-ui, -apple-system, sans-serif;
+  --font-serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
 
   /* ---------------------------------------------------------------------- */
   /* Paleta de marca MedMatch                                               */
@@ -70,6 +79,60 @@
   --color-warning-600: #cc7c08;
   --color-danger-500: #d6453c;
   --color-danger-600: #b1322b;
+
+  /* Animaciones */
+  --animate-reveal: reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-left {
+  from {
+    opacity: 0;
+    transform: translateX(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rule-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes vital-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent-400) 55%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent-400) 0%, transparent);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0);
+  }
 }
 
 @layer base {
@@ -86,5 +149,67 @@
 
   * {
     -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-400);
+    color: var(--color-primary-900);
+  }
+}
+
+@layer utilities {
+  /* Entrada escalonada: se aplica con un style inline animation-delay. */
+  .reveal {
+    opacity: 0;
+    animation: var(--animate-reveal);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    animation: reveal-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .rule-grow {
+    transform-origin: left center;
+    animation: rule-grow 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .vital-pulse {
+    animation: vital-pulse 2.4s ease-in-out infinite;
+  }
+
+  /* Texturas y atmósfera del shell oscuro */
+  .bg-blueprint {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-secondary-400) 8%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-secondary-400) 8%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 56px 56px;
+  }
+
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-left,
+    .rule-grow,
+    .vital-pulse {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 }

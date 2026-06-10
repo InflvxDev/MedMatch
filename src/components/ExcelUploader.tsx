@@ -36,7 +36,7 @@ export default function ExcelUploader({ onLoaded }: Props) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-xl">
+    <div className="mx-auto w-full max-w-2xl">
       <label
         onDragOver={(e) => {
           e.preventDefault();
@@ -44,26 +44,39 @@ export default function ExcelUploader({ onLoaded }: Props) {
         }}
         onDragLeave={() => setIsDragging(false)}
         onDrop={onDrop}
-        className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed p-10 text-center transition ${
+        className={`group relative flex cursor-pointer flex-col items-center justify-center gap-5 overflow-hidden rounded-2xl border-2 border-dashed p-12 text-center transition duration-300 ${
           isDragging
-            ? 'border-accent-400 bg-accent-50'
-            : 'border-secondary-300 bg-surface-50 hover:border-secondary-400 hover:bg-surface-100'
+            ? 'border-accent-400 bg-accent-400/10'
+            : 'border-primary-900/20 bg-surface-50/70 hover:border-secondary-400 hover:bg-surface-50'
         }`}
       >
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-600 text-2xl font-bold text-surface-50">
-          ↑
+        {/* Esquinas tipo instrumento */}
+        <span className="pointer-events-none absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-accent-400/60" />
+        <span className="pointer-events-none absolute right-4 top-4 h-5 w-5 border-r-2 border-t-2 border-accent-400/60" />
+        <span className="pointer-events-none absolute bottom-4 left-4 h-5 w-5 border-b-2 border-l-2 border-accent-400/60" />
+        <span className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b-2 border-r-2 border-accent-400/60" />
+
+        <div
+          className={`flex h-16 w-16 items-center justify-center rounded-2xl border border-accent-400/40 bg-surface-100 text-2xl text-accent-600 transition group-hover:scale-105 ${
+            isLoading ? 'animate-pulse' : ''
+          }`}
+        >
+          {isLoading ? '◌' : '↑'}
         </div>
+
         <div>
-          <p className="text-base font-semibold text-primary-700">
+          <p className="font-serif text-xl font-medium text-primary-700">
             {isLoading ? 'Procesando archivo…' : 'Sube tu archivo Excel'}
           </p>
-          <p className="mt-1 text-sm text-surface-600">
-            Arrastra y suelta o haz clic para seleccionar (.xlsx)
+          <p className="mt-2 text-sm text-secondary-600">
+            Arrastra y suelta, o haz clic para seleccionar
           </p>
-          <p className="mt-1 text-xs text-surface-500">
-            La hoja debe llamarse <span className="font-semibold">«Todos los registros»</span>
+          <p className="mt-3 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-secondary-500">
+            <span className="rounded bg-primary-700 px-1.5 py-0.5 text-accent-400">.xlsx</span>
+            hoja «Todos los registros»
           </p>
         </div>
+
         <input
           type="file"
           accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -74,7 +87,8 @@ export default function ExcelUploader({ onLoaded }: Props) {
       </label>
 
       {error && (
-        <p className="mt-4 rounded-lg border border-danger-500/30 bg-danger-500/10 p-3 text-sm text-danger-600">
+        <p className="mt-4 flex items-start gap-2 rounded-lg border border-danger-500/40 bg-danger-500/10 p-3 font-mono text-xs leading-relaxed text-danger-500">
+          <span className="mt-0.5 shrink-0">⚠</span>
           {error}
         </p>
       )}

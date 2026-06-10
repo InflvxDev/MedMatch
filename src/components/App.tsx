@@ -49,46 +49,130 @@ export default function App() {
 
   if (!hydrated) {
     return (
-      <div className="flex justify-center py-20 text-surface-600">Cargando…</div>
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-secondary-500">
+          <span className="h-2 w-2 animate-ping rounded-full bg-accent-400" />
+          Cargando instrumento
+        </div>
+      </div>
     );
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      <header className="mb-10 flex flex-col items-center gap-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-primary-700">
-          Med<span className="text-accent-400">Match</span>
-        </h1>
-        <p className="text-sm text-surface-600">
-          Comparador de precios de productos médicos
-        </p>
+    <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-5 pt-10 sm:px-8">
+      {/* ---------------------------------------------------------------- */}
+      {/* Cabecera editorial                                               */}
+      {/* ---------------------------------------------------------------- */}
+      <header className="relative border-b border-primary-900/10 pb-8">
+        <div className="reveal flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.4em] text-secondary-600" style={{ animationDelay: '0ms' }}>
+          <span className="inline-block h-px w-8 bg-accent-400" />
+          Comparador clínico de precios
+        </div>
+
+        <div className="mt-5 flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+          <h1
+            className="reveal font-serif text-5xl font-semibold leading-[0.95] tracking-tight text-primary-700 sm:text-7xl"
+            style={{ animationDelay: '90ms' }}
+          >
+            Med<span className="italic text-accent-500">Match</span>
+            <span className="align-top font-mono text-base font-normal text-secondary-400">®</span>
+          </h1>
+
+          <p
+            className="reveal max-w-xs text-balance text-sm leading-relaxed text-secondary-600"
+            style={{ animationDelay: '160ms' }}
+          >
+            Decisiones de compra basadas en evidencia. Compara portafolios médicos
+            lado a lado y detecta el mejor precio al instante.
+          </p>
+        </div>
+
+        <div
+          className="rule-grow mt-7 h-px w-full bg-linear-to-r from-accent-400 via-secondary-500/40 to-transparent"
+          style={{ animationDelay: '240ms' }}
+        />
       </header>
 
-      {!workbook ? (
-        <ExcelUploader onLoaded={handleLoaded} />
-      ) : (
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-xs text-surface-600">
-              {workbook.fileName} · {workbook.portfolios.length} portafolios ·{' '}
-              {workbook.rows.length} registros
-            </p>
-            <button
-              type="button"
-              onClick={handleReplace}
-              className="rounded-lg border border-secondary-300 bg-surface-50 px-3 py-1.5 text-xs font-semibold text-secondary-600 transition hover:bg-surface-100"
+      {/* ---------------------------------------------------------------- */}
+      {/* Cuerpo                                                           */}
+      {/* ---------------------------------------------------------------- */}
+      <main className="mt-10 flex-1">
+        {!workbook ? (
+          <div className="reveal" style={{ animationDelay: '320ms' }}>
+            <ExcelUploader onLoaded={handleLoaded} />
+          </div>
+        ) : (
+          <div className="flex flex-col gap-6">
+            {/* Barra de instrumento */}
+            <div
+              className="reveal flex flex-wrap items-center justify-between gap-4 rounded-xl border border-primary-900/10 bg-surface-50/80 px-4 py-3 shadow-[0_10px_30px_-20px_rgba(8,10,24,0.5)] backdrop-blur-sm"
+              style={{ animationDelay: '40ms' }}
             >
-              Reemplazar Excel
-            </button>
+              <dl className="flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-secondary-600">
+                <div className="flex items-center gap-2">
+                  <dt className="sr-only">Archivo</dt>
+                  <dd className="max-w-56 truncate text-primary-700">{workbook.fileName}</dd>
+                </div>
+                <div className="flex items-center gap-2">
+                  <dt>Portafolios</dt>
+                  <dd className="text-accent-600">{String(workbook.portfolios.length).padStart(2, '0')}</dd>
+                </div>
+                <div className="flex items-center gap-2">
+                  <dt>Registros</dt>
+                  <dd className="text-accent-600">{workbook.rows.length.toLocaleString('es-CO')}</dd>
+                </div>
+              </dl>
+
+              <button
+                type="button"
+                onClick={handleReplace}
+                className="group inline-flex items-center gap-2 rounded-lg border border-primary-900/15 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-secondary-600 transition hover:border-accent-400 hover:text-accent-600"
+              >
+                <span className="text-accent-500 transition group-hover:rotate-90">↻</span>
+                Reemplazar Excel
+              </button>
+            </div>
+
+            {/* Buscador */}
+            <div className="reveal relative z-30" style={{ animationDelay: '120ms' }}>
+              <SearchAutocomplete
+                suggestions={suggestions}
+                onSelect={setSelection}
+              />
+            </div>
+
+            {selection && (
+              <ComparisonResults comparisons={comparisons} selection={selection} />
+            )}
+          </div>
+        )}
+      </main>
+
+      <footer className="mt-16 border-t border-primary-900/10 pb-8 pt-6">
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-700 font-serif text-sm font-semibold text-surface-50">
+              M
+            </span>
+            <div className="leading-tight">
+              <p className="font-serif text-base font-semibold text-primary-700">
+                Med<span className="italic text-accent-500">Match</span>
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-secondary-500">
+                Comparador clínico
+              </p>
+            </div>
           </div>
 
-          <SearchAutocomplete suggestions={suggestions} onSelect={setSelection} />
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-500">
+            All&nbsp;vs&nbsp;All · Procesamiento local
+          </div>
 
-          {selection && (
-            <ComparisonResults comparisons={comparisons} selection={selection} />
-          )}
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-400">
+            © {new Date().getFullYear()} InflvxDev
+          </p>
         </div>
-      )}
+      </footer>
     </div>
   );
 }

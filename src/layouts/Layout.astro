@@ -10,9 +10,24 @@ import '../styles/global.css'
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>MedMatch</title>
+		<title>MedMatch — Comparador clínico de precios</title>
 	</head>
-	<body class="min-h-screen bg-surface-100 font-sans text-primary-700">
+	<body class="relative min-h-screen overflow-x-hidden bg-surface-100 font-sans text-primary-700 antialiased">
+		<!-- Atmósfera: glows radiales suaves -->
+		<div
+			aria-hidden="true"
+			class="pointer-events-none fixed inset-0 -z-30"
+			style="background:
+				radial-gradient(58rem 58rem at 92% -12%, color-mix(in srgb, var(--color-accent-400) 18%, transparent), transparent 60%),
+				radial-gradient(50rem 50rem at -10% 110%, color-mix(in srgb, var(--color-secondary-400) 22%, transparent), transparent 62%),
+				linear-gradient(180deg, var(--color-surface-50), var(--color-surface-100) 60%, var(--color-surface-200));"
+		>
+		</div>
+		<!-- Atmósfera: rejilla blueprint -->
+		<div aria-hidden="true" class="bg-blueprint pointer-events-none fixed inset-0 -z-20 opacity-60"></div>
+		<!-- Atmósfera: grano -->
+		<div aria-hidden="true" class="bg-grain pointer-events-none fixed inset-0 -z-10 opacity-[0.025] mix-blend-multiply"></div>
+
 		<slot />
 	</body>
 </html>

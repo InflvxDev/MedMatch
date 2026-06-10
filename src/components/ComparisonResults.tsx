@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import type { PortfolioComparison, Suggestion } from '../lib/types';
 import { providerLabel } from '../lib/labels';
+import { formatCurrency } from '../lib/format';
 import ProductCard from './ProductCard';
 
 interface Props {
@@ -19,44 +20,82 @@ export default function ComparisonResults({ comparisons, selection }: Props) {
 
   if (comparisons.length === 0) {
     return (
-      <p className="mt-8 rounded-xl border border-surface-200 bg-surface-50 p-6 text-center text-surface-600">
-        No se encontraron coincidencias para «{selection.description}».
-      </p>
+      <div className="reveal mt-8 rounded-xl border border-dashed border-primary-900/20 bg-surface-50/70 p-10 text-center">
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-secondary-600">
+          Sin coincidencias
+        </p>
+        <p className="mt-3 text-sm text-secondary-600">
+          No se encontraron registros para «{selection.description}».
+        </p>
+      </div>
     );
   }
 
   return (
-    <section className="mt-8">
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary-500">
-        Comparación de precios
-      </h2>
-      <div
-        className="grid gap-5"
-        style={{
-          gridTemplateColumns: `repeat(${comparisons.length}, minmax(260px, 1fr))`,
-        }}
-      >
-        {comparisons.map((comparison) => (
-          <div key={comparison.portfolio.id} className="flex flex-col gap-3">
-            <header className="rounded-lg bg-primary-600 px-3 py-2">
-              <p className="text-xs font-semibold uppercase tracking-wide text-accent-400">
-                {comparison.portfolio.id}
-              </p>
-              <p className="text-sm font-bold text-surface-50">
-                {providerLabel(comparison.portfolio.provider)}
-              </p>
-            </header>
-            <div className="flex flex-col gap-3">
-              {comparison.products.map((product, idx) => (
-                <ProductCard
-                  key={`${product.marca}-${product.description}-${idx}`}
-                  product={product}
-                  globalBestPrice={globalBestPrice}
-                />
-              ))}
-            </div>
+    <section className="mt-6">
+      <header className="reveal flex flex-wrap items-end justify-between gap-3 border-b border-primary-900/10 pb-4">
+        <div>
+          <h2 className="flex items-center gap-3 font-serif text-2xl font-semibold text-primary-700">
+            <span className="font-mono text-sm font-normal text-accent-500">01</span>
+            Comparación de precios
+          </h2>
+          <p className="mt-1 max-w-2xl truncate text-sm text-secondary-600">
+            «{selection.description}»
+          </p>
+        </div>
+        {globalBestPrice !== null && (
+          <div className="text-right">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-500">
+              Mejor precio detectado
+            </p>
+            <p className="font-mono text-lg font-semibold text-accent-600">
+              {formatCurrency(globalBestPrice)}
+            </p>
           </div>
-        ))}
+        )}
+      </header>
+
+      <div className="mt-6 overflow-x-auto pb-2">
+        <div
+          className="grid gap-5"
+          style={{
+            gridTemplateColumns: `repeat(${comparisons.length}, minmax(280px, 1fr))`,
+          }}
+        >
+          {comparisons.map((comparison, colIdx) => (
+            <div
+              key={comparison.portfolio.id}
+              className="reveal flex flex-col gap-3"
+              style={{ animationDelay: `${colIdx * 90}ms` }}
+            >
+              <header className="relative overflow-hidden rounded-xl border border-surface-100/10 bg-primary-900/70 px-4 py-3 backdrop-blur-sm">
+                <span className="absolute right-0 top-0 h-full w-1 bg-accent-400/70" />
+                <div className="flex items-center justify-between gap-2">
+                  <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.25em] text-accent-400">
+                    {comparison.portfolio.id}
+                  </p>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-secondary-300">
+                    {comparison.products.length}
+                    {comparison.products.length === 1 ? ' ítem' : ' ítems'}
+                  </span>
+                </div>
+                <p className="mt-1 font-serif text-lg font-medium leading-tight text-surface-50">
+                  {providerLabel(comparison.portfolio.provider)}
+                </p>
+              </header>
+
+              <div className="flex flex-col gap-3">
+                {comparison.products.map((product, idx) => (
+                  <ProductCard
+                    key={`${product.marca}-${product.description}-${idx}`}
+                    product={product}
+                    globalBestPrice={globalBestPrice}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
