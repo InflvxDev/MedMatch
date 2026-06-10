@@ -1,16 +1,73 @@
 ---
 import '../styles/global.css'
+
+interface Props {
+	title?: string;
+	description?: string;
+	/** Ruta de imagen social opcional, relativa al sitio. */
+	image?: string;
+}
+
+const {
+	title = 'MedMatch — Comparador clínico de precios de productos médicos',
+	description = 'MedMatch compara precios de productos médicos entre portafolios a partir de tu Excel y resalta el mejor precio para apoyar tus decisiones de compra. Procesamiento 100% en el navegador.',
+	image = '/favicon.svg',
+} = Astro.props;
+
+// URL canónica auto-referenciada basada en `site` de astro.config.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const socialImage = new URL(image, Astro.site ?? Astro.url.origin);
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'WebApplication',
+	name: 'MedMatch',
+	url: canonicalURL.href,
+	description,
+	applicationCategory: 'BusinessApplication',
+	operatingSystem: 'Web',
+	inLanguage: 'es',
+	offers: {
+		'@type': 'Offer',
+		price: '0',
+		priceCurrency: 'COP',
+	},
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>MedMatch — Comparador clínico de precios</title>
+
+		<!-- SEO primario -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<meta name="theme-color" content="#202a54" />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="MedMatch" />
+		<meta property="og:locale" content="es_ES" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:image" content={socialImage} />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImage} />
+
+		<!-- Datos estructurados -->
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	</head>
 	<body class="relative min-h-screen overflow-x-hidden bg-surface-100 font-sans text-primary-700 antialiased">
 		<!-- Atmósfera: glows radiales suaves -->
