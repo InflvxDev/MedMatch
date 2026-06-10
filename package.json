@@ -33,12 +33,5 @@
   },
   "overrides": {
     "vite": "^7"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "sharp",
-      "workerd"
-    ]
   }
 }
