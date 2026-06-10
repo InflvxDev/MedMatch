@@ -164,9 +164,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-600">
-            All&nbsp;vs&nbsp;All · Procesamiento local
-          </div>
+
 
           <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-600">
             © {new Date().getFullYear()} InflvxDev

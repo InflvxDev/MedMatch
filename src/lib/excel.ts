@@ -171,3 +171,44 @@ function portfolioNumber(id: string): number {
   const n = Number(id.replace(/^P/i, ''));
   return Number.isFinite(n) ? n : 0;
 }
+
+/**
+ * Genera una plantilla Excel en blanco con la hoja requerida
+ * («Todos los registros») y los encabezados de ejemplo para dos portafolios.
+ * Devuelve un Blob listo para descargar.
+ */
+export async function buildTemplateWorkbook(): Promise<Blob> {
+  const { default: ExcelJS } = await import('exceljs');
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet(SHEET_NAME);
+
+  // Dos portafolios de ejemplo con los campos requeridos.
+  const headers = [
+    'P1_PortafolioNombre_Descripcion',
+    'P1_PortafolioNombre_Marca',
+    'P1_PortafolioNombre_Precio',
+    'P2_PortafolioNombre_Descripcion',
+    'P2_PortafolioNombre_Marca',
+    'P2_PortafolioNombre_Precio',
+  ];
+
+  const headerRow = sheet.getRow(1);
+  headers.forEach((header, index) => {
+    const cell = headerRow.getCell(index + 1);
+    cell.value = header;
+    cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FF1E3A5F' },
+    };
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    sheet.getColumn(index + 1).width = Math.max(header.length + 4, 18);
+  });
+  headerRow.commit();
+
+  const buffer = await workbook.xlsx.writeBuffer();
+  return new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  });
+}

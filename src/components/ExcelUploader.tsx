@@ -1,5 +1,5 @@
 import { useState, type DragEvent } from 'react';
-import { parseWorkbook, ExcelParseError } from '../lib/excel';
+import { parseWorkbook, ExcelParseError, buildTemplateWorkbook } from '../lib/excel';
 import type { ParsedWorkbook } from '../lib/types';
 
 interface Props {
@@ -33,6 +33,22 @@ export default function ExcelUploader({ onLoaded }: Props) {
     e.preventDefault();
     setIsDragging(false);
     handleFile(e.dataTransfer.files?.[0]);
+  }
+
+  async function handleDownloadTemplate() {
+    try {
+      const blob = await buildTemplateWorkbook();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'plantilla-medmatch.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      setError('No se pudo generar la plantilla. Intenta de nuevo.');
+    }
   }
 
   return (
@@ -85,6 +101,21 @@ export default function ExcelUploader({ onLoaded }: Props) {
           onChange={(e) => handleFile(e.target.files?.[0])}
         />
       </label>
+
+      <div className="mt-5 flex flex-col items-center gap-2 rounded-xl border border-primary-900/10 bg-surface-50/50 p-4 text-center">
+        <p className="text-sm text-secondary-600">
+          ¿No tienes un archivo Excel? Descarga una plantilla en blanco con el
+          formato requerido.
+        </p>
+        <button
+          type="button"
+          onClick={handleDownloadTemplate}
+          className="inline-flex items-center gap-2 rounded-lg border border-accent-400/50 bg-surface-100 px-4 py-2 font-mono text-xs font-medium uppercase tracking-wider text-accent-600 transition hover:border-accent-400 hover:bg-accent-400/10"
+        >
+          <span aria-hidden="true">↓</span>
+          Descargar plantilla
+        </button>
+      </div>
 
       {error && (
         <p className="mt-4 flex items-start gap-2 rounded-lg border border-danger-500/40 bg-danger-500/10 p-3 font-mono text-xs leading-relaxed text-danger-500">
