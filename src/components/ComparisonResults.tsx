@@ -33,7 +33,7 @@ export default function ComparisonResults({ comparisons, selection }: Props) {
 
   return (
     <section className="mt-6">
-      <header className="reveal flex flex-wrap items-end justify-between gap-3 border-b border-primary-900/10 pb-4">
+      <header className="reveal flex flex-col gap-3 border-b border-primary-900/10 pb-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
         <div>
           <h2 className="flex items-center gap-3 font-serif text-2xl font-semibold text-primary-700">
             <span className="font-mono text-sm font-normal text-accent-700">01</span>
@@ -44,7 +44,7 @@ export default function ComparisonResults({ comparisons, selection }: Props) {
           </p>
         </div>
         {globalBestPrice !== null && (
-          <div className="text-right">
+          <div className="text-left sm:text-right">
             <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-600">
               Mejor precio detectado
             </p>
@@ -55,9 +55,9 @@ export default function ComparisonResults({ comparisons, selection }: Props) {
         )}
       </header>
 
-      <div className="mt-6 overflow-x-auto pb-2">
+      <div className="mt-6 pb-2 sm:overflow-x-auto">
         <div
-          className="grid gap-4 sm:gap-5"
+          className="flex flex-col gap-4 sm:grid sm:gap-5"
           style={{
             gridTemplateColumns: `repeat(${comparisons.length}, minmax(248px, 1fr))`,
           }}

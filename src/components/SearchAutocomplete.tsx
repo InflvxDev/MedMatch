@@ -140,7 +140,7 @@ export default function SearchAutocomplete({ suggestions, onSelect }: Props) {
         <div
           id="search-listbox"
           role="listbox"
-          className="absolute z-30 mt-2 max-h-96 w-full overflow-auto rounded-xl border border-surface-300/60 bg-surface-50 shadow-[0_24px_60px_-20px_rgba(8,10,24,0.8)]"
+          className="absolute z-30 mt-2 max-h-72 w-full overflow-auto rounded-xl border border-surface-300/60 bg-surface-50 shadow-[0_24px_60px_-20px_rgba(8,10,24,0.8)] sm:max-h-96"
         >
           {flat.length === 0 ? (
             <p className="px-4 py-4 text-center font-mono text-xs uppercase tracking-wider text-surface-600">

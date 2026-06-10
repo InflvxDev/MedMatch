@@ -59,19 +59,19 @@ export default function App() {
   }
 
   return (
-    <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-8 sm:px-8 sm:pt-10">
+    <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 sm:px-8 sm:pt-10">
       {/* ---------------------------------------------------------------- */}
       {/* Cabecera editorial                                               */}
       {/* ---------------------------------------------------------------- */}
-      <header className="relative border-b border-primary-900/10 pb-8">
+      <header className="relative border-b border-primary-900/10 pb-6 sm:pb-8">
         <div className="reveal flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.4em] text-secondary-600" style={{ animationDelay: '0ms' }}>
           <span className="inline-block h-px w-8 bg-accent-400" />
           Comparador clínico de precios
         </div>
 
-        <div className="mt-5 flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+        <div className="mt-5 flex flex-col gap-y-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-x-8">
           <h1
-            className="reveal font-serif text-5xl font-semibold leading-[0.95] tracking-tight text-primary-700 sm:text-7xl"
+            className="reveal font-serif text-4xl font-semibold leading-[0.95] tracking-tight text-primary-700 sm:text-7xl"
             style={{ animationDelay: '90ms' }}
           >
             Med<span className="italic text-accent-700">Match</span>
@@ -79,7 +79,7 @@ export default function App() {
           </h1>
 
           <p
-            className="reveal max-w-xs text-balance text-sm leading-relaxed text-secondary-600"
+            className="reveal max-w-none text-balance text-sm leading-relaxed text-secondary-600 sm:max-w-xs"
             style={{ animationDelay: '160ms' }}
           >
             Decisiones de compra basadas en evidencia. Compara portafolios médicos
@@ -96,7 +96,7 @@ export default function App() {
       {/* ---------------------------------------------------------------- */}
       {/* Cuerpo                                                           */}
       {/* ---------------------------------------------------------------- */}
-      <main className="mt-10 flex-1">
+      <main className="mt-8 flex-1 sm:mt-10">
         {!workbook ? (
           <div className="reveal" style={{ animationDelay: '320ms' }}>
             <ExcelUploader onLoaded={handleLoaded} />
@@ -105,7 +105,7 @@ export default function App() {
           <div className="flex flex-col gap-6">
             {/* Barra de instrumento */}
             <div
-              className="reveal flex flex-wrap items-center justify-between gap-4 rounded-xl border border-primary-900/10 bg-surface-50/80 px-4 py-3 shadow-[0_10px_30px_-20px_rgba(8,10,24,0.5)] backdrop-blur-sm"
+              className="reveal flex flex-col items-start gap-3 rounded-xl border border-primary-900/10 bg-surface-50/80 px-4 py-3 shadow-[0_10px_30px_-20px_rgba(8,10,24,0.5)] backdrop-blur-sm sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-4"
               style={{ animationDelay: '40ms' }}
             >
               <dl className="flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-secondary-600">
@@ -148,7 +148,7 @@ export default function App() {
         )}
       </main>
 
-      <footer className="mt-16 border-t border-primary-900/10 pb-8 pt-6">
+      <footer className="mt-12 border-t border-primary-900/10 pb-8 pt-6 sm:mt-16">
         <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
           <div className="flex items-center gap-3">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-700 font-serif text-sm font-semibold text-surface-50">
