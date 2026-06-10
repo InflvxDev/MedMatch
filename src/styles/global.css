@@ -1,1 +1,90 @@
 @import "tailwindcss";
+@import "@fontsource-variable/ibm-plex-sans";
+
+@theme {
+  /* Tipografía */
+  --font-sans: "IBM Plex Sans Variable", system-ui, -apple-system, sans-serif;
+
+  /* ---------------------------------------------------------------------- */
+  /* Paleta de marca MedMatch                                               */
+  /* Brand base: surface #fcf9f9 · primary #202a54 · secondary #5b739a ·    */
+  /*             accent #fcb836                                             */
+  /* ---------------------------------------------------------------------- */
+
+  /* Surface (neutro cálido derivado de #fcf9f9) */
+  --color-surface-50: #fcf9f9;
+  --color-surface-100: #f7f1f1;
+  --color-surface-200: #ece0e0;
+  --color-surface-300: #dcc9c9;
+  --color-surface-400: #c4a9a9;
+  --color-surface-500: #a78686;
+  --color-surface-600: #876868;
+  --color-surface-700: #6d5454;
+  --color-surface-800: #5a4646;
+  --color-surface-900: #4c3c3c;
+  --color-surface-950: #281f1f;
+
+  /* Primary (navy #202a54) */
+  --color-primary-50: #eef0f6;
+  --color-primary-100: #d3d8ea;
+  --color-primary-200: #a8b2d4;
+  --color-primary-300: #7d8cbf;
+  --color-primary-400: #4f5e95;
+  --color-primary-500: #2f3c6e;
+  --color-primary-600: #202a54;
+  --color-primary-700: #1a2245;
+  --color-primary-800: #141a36;
+  --color-primary-900: #0e1227;
+  --color-primary-950: #080a18;
+
+  /* Secondary (azul #5b739a) */
+  --color-secondary-50: #f1f4f8;
+  --color-secondary-100: #dde4ee;
+  --color-secondary-200: #bccada;
+  --color-secondary-300: #9aafc6;
+  --color-secondary-400: #7891b0;
+  --color-secondary-500: #5b739a;
+  --color-secondary-600: #495d80;
+  --color-secondary-700: #394866;
+  --color-secondary-800: #29344b;
+  --color-secondary-900: #1a2131;
+  --color-secondary-950: #0d111a;
+
+  /* Accent (ámbar #fcb836) */
+  --color-accent-50: #fff8e8;
+  --color-accent-100: #feedc2;
+  --color-accent-200: #fdda85;
+  --color-accent-300: #fcc84f;
+  --color-accent-400: #fcb836;
+  --color-accent-500: #f29e0c;
+  --color-accent-600: #cc7c08;
+  --color-accent-700: #a3590b;
+  --color-accent-800: #854710;
+  --color-accent-900: #713c11;
+  --color-accent-950: #421e04;
+
+  /* Estados semánticos */
+  --color-success-500: #1f9d6b;
+  --color-success-600: #167a52;
+  --color-warning-500: #f29e0c;
+  --color-warning-600: #cc7c08;
+  --color-danger-500: #d6453c;
+  --color-danger-600: #b1322b;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: var(--color-primary-700);
+    background-color: var(--color-surface-100);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+  }
+}
