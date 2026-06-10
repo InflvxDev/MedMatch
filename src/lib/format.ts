@@ -37,12 +37,23 @@ export function parseNumber(value: string | number | null | undefined): number |
       normalized = cleaned.replace(/,/g, '');
     }
   } else if (lastComma !== -1) {
-    // Solo comas: tratarlas como separador de miles.
-    normalized = cleaned.replace(/,/g, '');
-  } else {
-    // Solo puntos: si hay más de uno, son miles ("1.890.000").
-    const dots = (cleaned.match(/\./g) || []).length;
-    if (dots > 1) normalized = cleaned.replace(/\./g, '');
+    // Solo comas presentes.
+    const decimals = cleaned.length - lastComma - 1;
+    if ((cleaned.match(/,/g) || []).length > 1 || decimals === 3) {
+      // Varias comas, o una coma con 3 dígitos => separador de miles.
+      normalized = cleaned.replace(/,/g, '');
+    } else {
+      // Una coma con 1, 2 (o >3) dígitos => separador decimal.
+      normalized = cleaned.replace(',', '.');
+    }
+  } else if (lastDot !== -1) {
+    // Solo puntos presentes.
+    const decimals = cleaned.length - lastDot - 1;
+    if ((cleaned.match(/\./g) || []).length > 1 || decimals === 3) {
+      // Varios puntos, o un punto con 3 dígitos => separador de miles.
+      normalized = cleaned.replace(/\./g, '');
+    }
+    // Un punto con 1, 2 (o >3) dígitos => se deja como decimal.
   }
 
   const n = Number(normalized);

@@ -4,8 +4,8 @@ import { priceLabel } from './labels';
 
 export const SHEET_NAME = 'Todos los registros';
 
-/** Patrón de columna: P{n}_{PROVEEDOR}_{RESTO}. */
-const COLUMN_PATTERN = /^P(\d+)_([^_]+)_(.+)$/i;
+/** Patrón de columna: P{n}_{CUERPO}. */
+const BODY_PATTERN = /^P(\d+)_(.+)$/i;
 
 export class ExcelParseError extends Error {}
 
@@ -122,12 +122,27 @@ export function detectPortfolios(headers: string[]): Portfolio[] {
   >();
 
   for (const header of headers) {
-    const match = COLUMN_PATTERN.exec(header);
+    const match = BODY_PATTERN.exec(header);
     if (!match) continue;
 
     const id = `P${match[1]}`;
-    const provider = match[2];
-    const rest = match[3];
+    const body = match[2];
+    const upper = body.toUpperCase();
+
+    const markers: Array<{ idx: number; type: 'price' | 'desc' | 'marca' }> = [];
+    const precioIdx = upper.indexOf('PRECIO');
+    const descIdx = upper.indexOf('DESCRIPCION');
+    const marcaIdx = upper.indexOf('MARCA');
+    if (precioIdx >= 0) markers.push({ idx: precioIdx, type: 'price' });
+    if (descIdx >= 0) markers.push({ idx: descIdx, type: 'desc' });
+    if (marcaIdx >= 0) markers.push({ idx: marcaIdx, type: 'marca' });
+    if (markers.length === 0) continue;
+
+    markers.sort((a, b) => a.idx - b.idx);
+    const field = markers[0];
+    const provider = body.slice(0, field.idx).replace(/_+$/, '');
+    if (provider === '') continue;
+
     const key = `${id}::${provider}`;
 
     let entry = map.get(key);
@@ -136,12 +151,11 @@ export function detectPortfolios(headers: string[]): Portfolio[] {
       map.set(key, entry);
     }
 
-    const restUpper = rest.toUpperCase();
-    if (restUpper.includes('PRECIO')) {
+    if (field.type === 'price') {
       entry.priceCols.push(header);
-    } else if (restUpper.includes('DESCRIPCION')) {
+    } else if (field.type === 'desc') {
       entry.descCol = header;
-    } else if (restUpper.includes('MARCA')) {
+    } else if (field.type === 'marca') {
       entry.marcaCol = header;
     }
   }
