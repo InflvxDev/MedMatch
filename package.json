@@ -2,6 +2,8 @@
   "name": "medmatch",
   "type": "module",
   "version": "0.0.1",
+  "description": "Comparador de precios de productos médicos entre portafolios a partir de un Excel.",
+  "license": "MIT",
   "engines": {
     "node": ">=22.12.0"
   },
