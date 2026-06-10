@@ -11,7 +11,7 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   // URL pública del sitio (usada para canonical, Open Graph y sitemap).
   // Cámbiala por tu dominio definitivo si difiere.
-  site: 'https://medmatch.pages.dev',
+  site: 'https://medmatch.inflvx.org',
 
   vite: {
     plugins: [tailwindcss()]
