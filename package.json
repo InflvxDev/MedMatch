@@ -11,9 +11,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.7.0",
     "@astrojs/react": "^5.0.7",
     "@fontsource-variable/ibm-plex-sans": "^5.2.8",
     "@fontsource/ibm-plex-mono": "^5.2.7",
@@ -26,6 +28,10 @@
     "idb": "^8.0.3",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "wrangler": "^4.99.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
