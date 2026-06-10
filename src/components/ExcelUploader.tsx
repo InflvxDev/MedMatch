@@ -44,7 +44,7 @@ export default function ExcelUploader({ onLoaded }: Props) {
         }}
         onDragLeave={() => setIsDragging(false)}
         onDrop={onDrop}
-        className={`group relative flex cursor-pointer flex-col items-center justify-center gap-5 overflow-hidden rounded-2xl border-2 border-dashed p-12 text-center transition duration-300 ${
+        className={`group relative flex cursor-pointer flex-col items-center justify-center gap-5 overflow-hidden rounded-2xl border-2 border-dashed p-8 text-center transition duration-300 sm:p-12 ${
           isDragging
             ? 'border-accent-400 bg-accent-400/10'
             : 'border-primary-900/20 bg-surface-50/70 hover:border-secondary-400 hover:bg-surface-50'

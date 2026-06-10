@@ -97,7 +97,7 @@ export default function SearchAutocomplete({ suggestions, onSelect }: Props) {
 
   return (
     <div ref={containerRef} className="relative w-full">
-      <label className="mb-2 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.3em] text-secondary-300">
+      <label className="mb-2 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.3em] text-secondary-600">
         <span className="inline-block h-px w-5 bg-accent-400" />
         Buscar producto
       </label>
@@ -143,7 +143,7 @@ export default function SearchAutocomplete({ suggestions, onSelect }: Props) {
           className="absolute z-30 mt-2 max-h-96 w-full overflow-auto rounded-xl border border-surface-300/60 bg-surface-50 shadow-[0_24px_60px_-20px_rgba(8,10,24,0.8)]"
         >
           {flat.length === 0 ? (
-            <p className="px-4 py-4 text-center font-mono text-xs uppercase tracking-wider text-surface-500">
+            <p className="px-4 py-4 text-center font-mono text-xs uppercase tracking-wider text-surface-600">
               Sin resultados
             </p>
           ) : (

@@ -59,7 +59,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-5 pt-10 sm:px-8">
+    <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-8 sm:px-8 sm:pt-10">
       {/* ---------------------------------------------------------------- */}
       {/* Cabecera editorial                                               */}
       {/* ---------------------------------------------------------------- */}
@@ -74,8 +74,8 @@ export default function App() {
             className="reveal font-serif text-5xl font-semibold leading-[0.95] tracking-tight text-primary-700 sm:text-7xl"
             style={{ animationDelay: '90ms' }}
           >
-            Med<span className="italic text-accent-500">Match</span>
-            <span className="align-top font-mono text-base font-normal text-secondary-400">®</span>
+            Med<span className="italic text-accent-700">Match</span>
+            <span className="align-top font-mono text-base font-normal text-secondary-600">®</span>
           </h1>
 
           <p
@@ -115,11 +115,11 @@ export default function App() {
                 </div>
                 <div className="flex items-center gap-2">
                   <dt>Portafolios</dt>
-                  <dd className="text-accent-600">{String(workbook.portfolios.length).padStart(2, '0')}</dd>
+                  <dd className="text-accent-700">{String(workbook.portfolios.length).padStart(2, '0')}</dd>
                 </div>
                 <div className="flex items-center gap-2">
                   <dt>Registros</dt>
-                  <dd className="text-accent-600">{workbook.rows.length.toLocaleString('es-CO')}</dd>
+                  <dd className="text-accent-700">{workbook.rows.length.toLocaleString('es-CO')}</dd>
                 </div>
               </dl>
 
@@ -156,19 +156,19 @@ export default function App() {
             </span>
             <div className="leading-tight">
               <p className="font-serif text-base font-semibold text-primary-700">
-                Med<span className="italic text-accent-500">Match</span>
+                Med<span className="italic text-accent-700">Match</span>
               </p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-secondary-500">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-secondary-600">
                 Comparador clínico
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-500">
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-600">
             All&nbsp;vs&nbsp;All · Procesamiento local
           </div>
 
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-400">
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-secondary-600">
             © {new Date().getFullYear()} InflvxDev
           </p>
         </div>

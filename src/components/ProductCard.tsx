@@ -31,7 +31,7 @@ export default function ProductCard({ product, globalBestPrice }: Props) {
       <header className="flex items-start justify-between gap-2 pl-2">
         <div>
           {product.marca && (
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary-500">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary-600">
               {product.marca}
             </p>
           )}
@@ -49,7 +49,7 @@ export default function ProductCard({ product, globalBestPrice }: Props) {
 
       <ul className="flex flex-col gap-1.5 border-t border-dashed border-surface-300/60 pl-2 pt-3">
         {product.prices.length === 0 && (
-          <li className="font-mono text-xs uppercase tracking-wider text-surface-500">
+          <li className="font-mono text-xs uppercase tracking-wider text-surface-600">
             Sin precio
           </li>
         )}
@@ -57,7 +57,7 @@ export default function ProductCard({ product, globalBestPrice }: Props) {
           const isMin = product.minPrice !== null && price.value === product.minPrice;
           return (
             <li key={price.label} className="flex items-baseline justify-between gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wide text-surface-600">
+              <span className="font-mono text-[10px] uppercase tracking-wide text-surface-700">
                 {price.label}
               </span>
               <span
