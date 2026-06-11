@@ -68,7 +68,7 @@ export default function ComparisonResults({ comparisons, selection }: Props) {
               className="reveal flex flex-col gap-3"
               style={{ animationDelay: `${colIdx * 90}ms` }}
             >
-              <header className="relative overflow-hidden rounded-xl border border-surface-100/10 bg-primary-900/70 px-4 py-3 backdrop-blur-sm">
+              <header className="relative overflow-hidden rounded-xl border border-surface-100/10 bg-linear-to-br from-primary-900/88 to-primary-800/80 px-4 py-3">
                 <span className="absolute right-0 top-0 h-full w-1 bg-accent-400/70" />
                 <div className="flex items-center justify-between gap-2">
                   <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.25em] text-accent-400">
