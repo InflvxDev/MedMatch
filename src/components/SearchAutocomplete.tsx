@@ -16,14 +16,21 @@ export default function SearchAutocomplete({ suggestions, onSelect }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (q === '') return [];
+    const normalizedQuery = normalizeText(query);
+    if (normalizedQuery === '') return [];
+    const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
+
     return suggestions
-      .filter(
-        (s) =>
-          s.description.toLowerCase().includes(q) ||
-          s.provider.toLowerCase().includes(q),
-      );
+      .filter((s) => {
+        const description = normalizeText(s.description);
+        const provider = normalizeText(s.provider);
+
+        // Match por tokens: todas las palabras buscadas deben existir,
+        // aunque no estén seguidas ni en el mismo orden.
+        return tokens.every(
+          (token) => description.includes(token) || provider.includes(token),
+        );
+      });
   }, [query, suggestions]);
 
   // Agrupar por proveedor para el dropdown.
@@ -181,4 +188,12 @@ export default function SearchAutocomplete({ suggestions, onSelect }: Props) {
       )}
     </div>
   );
+}
+
+function normalizeText(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
 }

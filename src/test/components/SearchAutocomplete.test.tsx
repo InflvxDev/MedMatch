@@ -89,4 +89,31 @@ describe('SearchAutocomplete', () => {
     expect(screen.getByText('Lh')).toBeInTheDocument();
     expect(screen.getByRole('option', { name: /Clavo corto especial/i })).toBeInTheDocument();
   });
+
+  it('matches products when query words are separated in description', async () => {
+    const onSelect = vi.fn();
+    const user = userEvent.setup();
+    const tokenizedSuggestions: Suggestion[] = [
+      {
+        portfolioId: 'P1',
+        provider: 'GENEFIX',
+        description: 'Clavo bloqueado de tibia canulado multibloqueo TI 11*300 mm',
+      },
+      {
+        portfolioId: 'P2',
+        provider: 'LH',
+        description: 'Placa para húmero proximal',
+      },
+    ];
+
+    render(<SearchAutocomplete suggestions={tokenizedSuggestions} onSelect={onSelect} />);
+
+    await user.type(screen.getByRole('combobox'), 'Clavo tibia');
+
+    expect(
+      screen.getByRole('option', {
+        name: /Clavo bloqueado de tibia canulado multibloqueo TI 11\*300 mm/i,
+      }),
+    ).toBeInTheDocument();
+  });
 });
