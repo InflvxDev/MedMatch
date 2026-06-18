@@ -67,4 +67,26 @@ describe('SearchAutocomplete', () => {
 
     expect(onSelect).toHaveBeenCalledWith(suggestions[0]);
   });
+
+  it('shows matches from all portfolios without truncating early', async () => {
+    const onSelect = vi.fn();
+    const user = userEvent.setup();
+    const manyFromP1: Suggestion[] = Array.from({ length: 55 }, (_, index) => ({
+      portfolioId: 'P1',
+      provider: 'GENEFIX',
+      description: `Clavo largo ${index + 1}`,
+    }));
+    const crossPortfolioSuggestions: Suggestion[] = [
+      ...manyFromP1,
+      { portfolioId: 'P2', provider: 'LH', description: 'Clavo corto especial' },
+    ];
+
+    render(<SearchAutocomplete suggestions={crossPortfolioSuggestions} onSelect={onSelect} />);
+
+    await user.type(screen.getByRole('combobox'), 'clavo');
+
+    expect(screen.getByText('Genefix')).toBeInTheDocument();
+    expect(screen.getByText('Lh')).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: /Clavo corto especial/i })).toBeInTheDocument();
+  });
 });

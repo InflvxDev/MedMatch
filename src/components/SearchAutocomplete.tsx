@@ -8,8 +8,6 @@ interface Props {
   onSelect: (suggestion: Suggestion | null) => void;
 }
 
-const MAX_RESULTS = 50;
-
 export default function SearchAutocomplete({ suggestions, onSelect }: Props) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
@@ -25,8 +23,7 @@ export default function SearchAutocomplete({ suggestions, onSelect }: Props) {
         (s) =>
           s.description.toLowerCase().includes(q) ||
           s.provider.toLowerCase().includes(q),
-      )
-      .slice(0, MAX_RESULTS);
+      );
   }, [query, suggestions]);
 
   // Agrupar por proveedor para el dropdown.
